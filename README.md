@@ -16,7 +16,7 @@ This project provides an automated tool for building and managing Data Vault 2.0
 ![Data Vault Architecture](image/mermaid-diagram.png)
 
 ## Features
-1. **SQL-Centric Automation**: We use PySpark’s ```sql()``` function as a powerful "Code Generator." By feeding metadata into SparkSQL, the engine automatically builds and manages your Data Vault entities and Materialized Lake Views (MLVs) without manual coding.
+1. **SQL-Centric Automation**: We use PySpark’s ```sql()``` function as a powerful "Code Generator." By feeding metadata into SparkSQL, the engine automatically builds your Data Vault entities in Materialized Lake Views (MLVs) without manual SQL coding.
 
 2. **Scalable Templating**: Scaling your architecture is as simple as updating a configuration. Whether you prefer using a YAML file or a Python dictionary, the "Template-First" approach ensures that adding 100 new Hubs or Links follows the exact same standardized logic.
 
