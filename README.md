@@ -85,3 +85,10 @@ dv.construct_vault(execute=True, verbose=True, force=True)
 - **dv_ddl_generator**: DDL (SQL String) Generation for Stage and Vault Entities
 - **dv_validator**: Config Parsing validations
 - **dv_utils**: Import-Export util, etc...
+
+
+#### Helpful Addition features for Materialized Lake Views
+- More supported SparkSQL statements (ex: Joins apart from Inner Join, ROW_NUMBER(), etc...)
+- Controllable concurrency settings
+- Column-level Data quality checks to be able to drop records if hash_diff is the same
+- Additional column for descriptions in dbo.sys_dq_metrics to know why an MLV fully refreshed instead of incremental
