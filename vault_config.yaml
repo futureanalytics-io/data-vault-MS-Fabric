@@ -1,0 +1,723 @@
+metadata:
+  default_load_datetime_column: ingestion_time
+  version: '1.0'
+registered_hubs: []
+registered_links: []
+hubs:
+- name: hub_contacts
+  schema_name: silver
+  business_key_columns:
+  - id
+  source_table: cc_fabric_lakehouse_new.bronze.hubspot_contacts
+- name: hub_companies
+  schema_name: silver
+  business_key_columns:
+  - id
+  source_table: cc_fabric_lakehouse_new.bronze.hubspot_companies
+- name: hub_owners
+  schema_name: silver
+  business_key_columns:
+  - id
+  source_table: cc_fabric_lakehouse_new.bronze.hubspot_owners
+- name: hub_deals
+  schema_name: silver
+  business_key_columns:
+  - id
+  source_table: cc_fabric_lakehouse_new.bronze.hubspot_deals
+- name: hub_products
+  schema_name: silver
+  business_key_columns:
+  - id
+  source_table: cc_fabric_lakehouse_new.bronze.hubspot_products
+- name: hub_line_items
+  schema_name: silver
+  business_key_columns:
+  - id
+  source_table: cc_fabric_lakehouse_new.bronze.hubspot_line_items
+- name: hub_tickets
+  schema_name: silver
+  business_key_columns:
+  - id
+  source_table: cc_fabric_lakehouse_new.bronze.hubspot_tickets
+- name: hub_quotes
+  schema_name: silver
+  business_key_columns:
+  - id
+  source_table: cc_fabric_lakehouse_new.bronze.hubspot_quotes
+- name: hub_pipelines_deals_stages
+  schema_name: silver
+  business_key_columns:
+  - id
+  source_table: cc_fabric_lakehouse_new.bronze.hubspot_pipelines_deals__stages
+- name: hub_pipelines_deals
+  schema_name: silver
+  business_key_columns:
+  - id
+  source_table: cc_fabric_lakehouse_new.bronze.hubspot_pipelines_deals
+links:
+- name: link_company_contact
+  schema_name: silver
+  staging_schema: staging
+  anchor:
+    table: cc_fabric_lakehouse_new.bronze.hubspot_companies__contacts
+    bk_columns:
+    - id
+  hub_mapping:
+  - hub: hub_companies
+    table: cc_fabric_lakehouse_new.bronze.hubspot_companies
+    bk_columns:
+    - id
+    join_on:
+      value: id
+  - hub: hub_contacts
+    table: cc_fabric_lakehouse_new.bronze.hubspot_contacts
+    bk_columns:
+    - id
+    join_on:
+      contacts_id: id
+- name: link_company_deal
+  schema_name: silver
+  staging_schema: staging
+  anchor:
+    table: cc_fabric_lakehouse_new.bronze.hubspot_companies__deals
+    bk_columns:
+    - id
+  hub_mapping:
+  - hub: hub_companies
+    table: cc_fabric_lakehouse_new.bronze.hubspot_companies
+    bk_columns:
+    - id
+    join_on:
+      value: id
+  - hub: hub_deals
+    table: cc_fabric_lakehouse_new.bronze.hubspot_deals
+    bk_columns:
+    - id
+    join_on:
+      deals_id: id
+- name: link_company_quote
+  schema_name: silver
+  staging_schema: staging
+  anchor:
+    table: cc_fabric_lakehouse_new.bronze.hubspot_companies__quotes
+    bk_columns:
+    - id
+  hub_mapping:
+  - hub: hub_companies
+    table: cc_fabric_lakehouse_new.bronze.hubspot_companies
+    bk_columns:
+    - id
+    join_on:
+      value: id
+  - hub: hub_quotes
+    table: cc_fabric_lakehouse_new.bronze.hubspot_quotes
+    bk_columns:
+    - id
+    join_on:
+      quotes_id: id
+- name: link_company_ticket
+  schema_name: silver
+  staging_schema: staging
+  anchor:
+    table: cc_fabric_lakehouse_new.bronze.hubspot_companies__tickets
+    bk_columns:
+    - id
+  hub_mapping:
+  - hub: hub_companies
+    table: cc_fabric_lakehouse_new.bronze.hubspot_companies
+    bk_columns:
+    - id
+    join_on:
+      value: id
+  - hub: hub_tickets
+    table: cc_fabric_lakehouse_new.bronze.hubspot_tickets
+    bk_columns:
+    - id
+    join_on:
+      tickets_id: id
+- name: link_company_owner
+  schema_name: silver
+  staging_schema: staging
+  anchor:
+    table: cc_fabric_lakehouse_new.bronze.hubspot_companies
+    hub: hub_companies
+    bk_columns:
+    - id
+  hub_mapping:
+  - hub: hub_owners
+    table: cc_fabric_lakehouse_new.bronze.hubspot_owners
+    bk_columns:
+    - id
+    join_on:
+      hubspot_owner_id: id
+- name: link_contact_deal
+  schema_name: silver
+  staging_schema: staging
+  anchor:
+    table: cc_fabric_lakehouse_new.bronze.hubspot_contacts__deals
+    bk_columns:
+    - id
+  hub_mapping:
+  - hub: hub_contacts
+    table: cc_fabric_lakehouse_new.bronze.hubspot_contacts
+    bk_columns:
+    - id
+    join_on:
+      value: id
+  - hub: hub_deals
+    table: cc_fabric_lakehouse_new.bronze.hubspot_deals
+    bk_columns:
+    - id
+    join_on:
+      deals_id: id
+- name: link_contact_quote
+  schema_name: silver
+  staging_schema: staging
+  anchor:
+    table: cc_fabric_lakehouse_new.bronze.hubspot_contacts__quotes
+    bk_columns:
+    - id
+  hub_mapping:
+  - hub: hub_contacts
+    table: cc_fabric_lakehouse_new.bronze.hubspot_contacts
+    bk_columns:
+    - id
+    join_on:
+      value: id
+  - hub: hub_quotes
+    table: cc_fabric_lakehouse_new.bronze.hubspot_quotes
+    bk_columns:
+    - id
+    join_on:
+      quotes_id: id
+- name: link_contact_owner
+  schema_name: silver
+  staging_schema: staging
+  anchor:
+    table: cc_fabric_lakehouse_new.bronze.hubspot_contacts
+    hub: hub_contacts
+    bk_columns:
+    - id
+  hub_mapping:
+  - hub: hub_owners
+    table: cc_fabric_lakehouse_new.bronze.hubspot_owners
+    bk_columns:
+    - id
+    join_on:
+      hubspot_owner_id: id
+- name: link_deal_line_item
+  schema_name: silver
+  staging_schema: staging
+  anchor:
+    table: cc_fabric_lakehouse_new.bronze.hubspot_line_items__associated_deals
+    bk_columns:
+    - id
+  hub_mapping:
+  - hub: hub_deals
+    table: cc_fabric_lakehouse_new.bronze.hubspot_deals
+    bk_columns:
+    - id
+    join_on:
+      value: id
+  - hub: hub_line_items
+    table: cc_fabric_lakehouse_new.bronze.hubspot_line_items
+    bk_columns:
+    - id
+    join_on:
+      _dlt_parent_id: _dlt_id
+- name: link_deal_owner
+  schema_name: silver
+  staging_schema: staging
+  anchor:
+    table: cc_fabric_lakehouse_new.bronze.hubspot_deals
+    hub: hub_deals
+    bk_columns:
+    - id
+  hub_mapping:
+  - hub: hub_owners
+    table: cc_fabric_lakehouse_new.bronze.hubspot_owners
+    bk_columns:
+    - id
+    join_on:
+      hubspot_owner_id: id
+- name: link_quote_line_item
+  schema_name: silver
+  staging_schema: staging
+  anchor:
+    table: cc_fabric_lakehouse_new.bronze.hubspot_line_items__associated_quotes
+    bk_columns:
+    - id
+  hub_mapping:
+  - hub: hub_quotes
+    table: cc_fabric_lakehouse_new.bronze.hubspot_quotes
+    bk_columns:
+    - id
+    join_on:
+      value: id
+  - hub: hub_line_items
+    table: cc_fabric_lakehouse_new.bronze.hubspot_line_items
+    bk_columns:
+    - id
+    join_on:
+      _dlt_parent_id: _dlt_id
+- name: link_ticket_owner
+  schema_name: silver
+  staging_schema: staging
+  anchor:
+    table: cc_fabric_lakehouse_new.bronze.hubspot_tickets
+    hub: hub_tickets
+    bk_columns:
+    - id
+  hub_mapping:
+  - hub: hub_owners
+    table: cc_fabric_lakehouse_new.bronze.hubspot_owners
+    bk_columns:
+    - id
+    join_on:
+      hubspot_owner_id: id
+- name: link_line_item_product
+  schema_name: silver
+  staging_schema: staging
+  anchor:
+    table: cc_fabric_lakehouse_new.bronze.hubspot_line_items
+    hub: hub_line_items
+    bk_columns:
+    - id
+  hub_mapping:
+  - hub: hub_products
+    table: cc_fabric_lakehouse_new.bronze.hubspot_products
+    bk_columns:
+    - id
+    join_on:
+      properties__hs_product_id: id
+- name: link_deal_pipeline_stage
+  schema_name: silver
+  staging_schema: staging
+  anchor:
+    table: cc_fabric_lakehouse_new.bronze.hubspot_deals
+    hub: hub_deals
+    bk_columns:
+    - id
+  hub_mapping:
+  - hub: hub_pipelines_deals_stages
+    table: cc_fabric_lakehouse_new.bronze.hubspot_pipelines_deals__stages
+    bk_columns:
+    - id
+    join_on:
+      dealstage: id
+  - hub: hub_pipelines_deals
+    table: cc_fabric_lakehouse_new.bronze.hubspot_pipelines_deals
+    bk_columns:
+    - id
+    join_on:
+      pipeline: id
+- name: link_deals_stage_history
+  schema_name: silver
+  staging_schema: staging
+  anchor:
+    table: cc_fabric_lakehouse_new.bronze.hubspot_deals_property_history
+  hub_mapping:
+  - hub: hub_pipelines_deals_stages
+    table: cc_fabric_lakehouse_new.bronze.hubspot_pipelines_deals__stages
+    bk_columns:
+    - id
+    join_on:
+      value: id
+  - hub: hub_deals
+    table: cc_fabric_lakehouse_new.bronze.hubspot_deals
+    bk_columns:
+    - id
+    join_on:
+      object_id: id
+satellites:
+- name: sat_companies
+  schema_name: silver
+  parent_hub_or_link: hub_companies
+  descriptive_columns:
+  - lifecyclestage
+  - num_associated_deals
+  - country
+  - hubspot_owner_id
+  - twitterbio
+  - first_conversion_date
+  - googleplus_page
+  - city
+  - twitterhandle
+  - address
+  - about_us
+  - num_conversion_events_cardinality_sum_d095f14b
+  - company_industry
+  - engagements_last_meeting_booked_campaign
+  - annualrevenue
+  - numberofemployees
+  - zip
+  - facebookfans
+  - days_to_close
+  - twitterfollowers
+  - engagements_last_meeting_booked_source
+  - hubspot_team_id
+  - hubspot_owner_assigneddate
+  - lfapp_latest_visit
+  - lfapp_view_in_leadfeeder
+  - createdate
+  - state
+  - engagements_last_meeting_booked
+  - first_contact_createdate_timestamp_earliest_value_78b50eea
+  - industry
+  - ownername
+  - total_revenue
+  - type
+  - founded_year
+  - website
+  - num_associated_contacts
+  - linkedin_company_page
+  - recent_conversion_date
+  - timezone
+  - recent_deal_amount
+  - first_deal_created_date
+  - hs_lastmodifieddate
+  - num_notes
+  - recent_deal_close_date
+  - web_technologies
+  - description
+  - linkedinbio
+  - owneremail
+  - closedate
+  - total_money_raised
+  - num_contacted_notes
+  - domain
+  - is_public
+  - name
+  - engagements_last_meeting_booked_medium
+  - phone
+  - address2
+  - hubspotscore
+  - rep
+  - recent_conversion_event_name
+  - notes_last_contacted
+  - notes_last_updated
+  - first_conversion_event_name
+  - num_conversion_events
+  - facebook_company_page
+  - notes_next_activity_date
+  - hs_object_id
+  - recent_conversion_date_timestamp_latest_value_72856da1
+  - recent_conversion_event_name_timestamp_latest_value_66c820bf
+  - first_contact_createdate
+  - first_contact_createdate__v_text
+  - _dlt_load_id
+  - _dlt_id
+  - is_public__v_text
+  - notes_next_activity_date__v_text
+  - annualrevenue__v_text
+  - numberofemployees__v_text
+  - num_conversion_events__v_text
+  - engagements_last_meeting_booked__v_text
+  - first_deal_created_date__v_text
+  - num_associated_deals__v_text
+  - days_to_close__v_text
+  - recent_deal_amount__v_text
+  - recent_deal_close_date__v_text
+  - total_revenue__v_text
+  - notes_last_updated__v_text
+  - ingestion_time
+  - source_file
+  source_table: cc_fabric_lakehouse_new.bronze.hubspot_companies
+  include_mode: true
+- name: sat_contacts
+  schema_name: silver
+  parent_hub_or_link: hub_contacts
+  descriptive_columns:
+  - surveymonkeyeventlastupdated
+  - lifecyclestage
+  - num_associated_deals
+  - country
+  - hubspot_owner_id
+  - twitterbio
+  - ip_country_code
+  - first_conversion_date
+  - field_of_study
+  - city
+  - twitterhandle
+  - followercount
+  - associatedcompanylastupdated
+  - address
+  - linkedinconnections
+  - school
+  - engagements_last_meeting_booked_campaign
+  - annualrevenue
+  - zip
+  - ip_latlon
+  - days_to_close
+  - lead_source
+  - currentlyinworkflow
+  - engagements_last_meeting_booked_source
+  - degree
+  - hubspot_team_id
+  - hubspot_owner_assigneddate
+  - createdate
+  - state
+  - engagements_last_meeting_booked
+  - industry
+  - ownername
+  - total_revenue
+  - start_date
+  - seniority
+  - webinareventlastupdated
+  - graduation_date
+  - kloutscoregeneral
+  - website
+  - recent_conversion_date
+  - trade_show
+  - recent_deal_amount
+  - first_deal_created_date
+  - ip_zipcode
+  - num_notes
+  - ip_state
+  - firstname
+  - lastname
+  - recent_deal_close_date
+  - application
+  - num_unique_conversion_events
+  - linkedinbio
+  - owneremail
+  - photo
+  - market_segment
+  - awaiting_response
+  - closedate
+  - num_contacted_notes
+  - blog_default_hubspot_blog_7848975603_subscription
+  - company
+  - email
+  - relationship_status
+  - message
+  - company_size
+  - ip_city
+  - mobilephone
+  - engagements_last_meeting_booked_medium
+  - phone
+  - ip_state_code
+  - work_email
+  - date_of_birth
+  - hubspotscore
+  - medium
+  - military_status
+  - rep
+  - recent_conversion_event_name
+  - jobtitle
+  - fax
+  - notes_last_contacted
+  - notes_last_updated
+  - associatedcompanyid
+  - first_conversion_event_name
+  - twitterprofilephoto
+  - lastmodifieddate
+  - num_conversion_events
+  - notes_next_activity_date
+  - ip_country
+  - information
+  - hs_object_id
+  - gender
+  - numemployees
+  - marital_status
+  - salutation
+  - job_function
+  - engagements_last_meeting_booked__v_text
+  - historical_last_modified_date
+  - notes_last_contacted__v_text
+  - notes_next_activity_date__v_text
+  - siq_created_date
+  - _dlt_load_id
+  - _dlt_id
+  - recent_deal_amount__v_text
+  - recent_deal_close_date__v_text
+  - total_revenue__v_text
+  - first_deal_created_date__v_text
+  - num_associated_deals__v_text
+  - first_conversion_date__v_text
+  - recent_conversion_date__v_text
+  - notes_last_updated__v_text
+  - associatedcompanyid__v_text
+  - days_to_close__v_text
+  - ingestion_time
+  - source_file
+  source_table: cc_fabric_lakehouse_new.bronze.hubspot_contacts
+  include_mode: true
+- name: sat_deals
+  schema_name: silver
+  parent_hub_or_link: hub_deals
+  descriptive_columns:
+  - pipeline
+  - closedate
+  - hubspot_owner_id
+  - deal_source
+  - num_contacted_notes
+  - dealstage
+  - engagements_last_meeting_booked_campaign
+  - comments
+  - deal_currency_code
+  - days_to_close
+  - last_touch_attribution_source
+  - engagements_last_meeting_booked_source
+  - closed_lost_reason
+  - next_step
+  - dealname
+  - hubspot_team_id
+  - hubspot_owner_assigneddate
+  - engagements_last_meeting_booked_medium
+  - lfapp_latest_visit
+  - lfapp_view_in_leadfeeder
+  - createdate
+  - engagements_last_meeting_booked
+  - trade_show_event_attribution
+  - notes_last_contacted
+  - dealtype
+  - notes_last_updated
+  - closed_won_reason
+  - closed_lost_reason_details
+  - amount_in_home_currency
+  - num_associated_contacts
+  - deal_background_checked
+  - product_category
+  - notes_next_activity_date
+  - hs_lastmodifieddate
+  - num_notes
+  - amount
+  - hs_object_id
+  - system_information
+  - forecast
+  - market
+  - on_hold
+  - description
+  - _dlt_load_id
+  - _dlt_id
+  - historical_created_date
+  - customer_expected_ship_date
+  - notes_next_activity_date__v_text
+  - engagements_last_meeting_booked__v_text
+  - notes_last_contacted__v_text
+  - notes_last_updated__v_text
+  - ingestion_time
+  - source_file
+  source_table: cc_fabric_lakehouse_new.bronze.hubspot_deals
+  include_mode: true
+- name: sat_tickets
+  schema_name: silver
+  parent_hub_or_link: hub_tickets
+  descriptive_columns:
+  - nps_follow_up_question_version
+  - hubspot_owner_id
+  - num_contacted_notes
+  - hs_ticket_category
+  - last_engagement_date
+  - last_reply_date
+  - created_by
+  - nps_score
+  - hubspot_team_id
+  - hubspot_owner_assigneddate
+  - source_thread_id
+  - source_ref
+  - createdate
+  - tags
+  - nps_follow_up_answer
+  - notes_last_contacted
+  - hs_pipeline_stage
+  - time_to_close
+  - hs_ticket_priority
+  - notes_last_updated
+  - content
+  - closed_date
+  - first_agent_reply_date
+  - subject
+  - notes_next_activity_date
+  - hs_lastmodifieddate
+  - num_notes
+  - source_type
+  - hs_object_id
+  - hs_pipeline
+  - time_to_first_agent_reply
+  - _dlt_load_id
+  - _dlt_id
+  - ingestion_time
+  - source_file
+  source_table: cc_fabric_lakehouse_new.bronze.hubspot_tickets
+  include_mode: true
+- name: sat_products
+  schema_name: silver
+  parent_hub_or_link: hub_products
+  descriptive_columns:
+  - hubspot_owner_id
+  - discount
+  - quantity
+  - price
+  - name
+  - hs_lastmodifieddate
+  - tax
+  - amount
+  - hs_object_id
+  - hubspot_team_id
+  - recurringbillingfrequency
+  - hubspot_owner_assigneddate
+  - description
+  - createdate
+  - _dlt_load_id
+  - _dlt_id
+  - ingestion_time
+  - source_file
+  source_table: cc_fabric_lakehouse_new.bronze.hubspot_products
+  include_mode: true
+- name: sat_line_items
+  schema_name: silver
+  parent_hub_or_link: hub_line_items
+  descriptive_columns:
+  - properties__amount
+  - properties__createdate
+  - properties__hs_lastmodifieddate
+  - properties__hs_object_id
+  - properties__hs_product_id
+  - properties__name
+  - properties__price
+  - properties__quantity
+  - created_at
+  - updated_at
+  - archived
+  - url
+  - _dlt_load_id
+  - _dlt_id
+  - ingestion_time
+  - source_file
+  source_table: cc_fabric_lakehouse_new.bronze.hubspot_line_items
+  include_mode: true
+- name: sat_owners
+  schema_name: silver
+  parent_hub_or_link: hub_owners
+  descriptive_columns:
+  - email
+  - type
+  - first_name
+  - last_name
+  - user_id
+  - user_id_including_inactive
+  - created_at
+  - updated_at
+  - archived
+  - _dlt_load_id
+  - _dlt_id
+  - ingestion_time
+  - source_file
+  source_table: cc_fabric_lakehouse_new.bronze.hubspot_owners
+  include_mode: true
+- name: sat_deal_property_history
+  schema_name: silver
+  parent_hub_or_link: hub_deals
+  descriptive_columns:
+  - property_name
+  - value
+  - timestamp
+  - source_type
+  - source_id
+  - updated_by_user_id
+  source_table: cc_fabric_lakehouse_new.bronze.hubspot_deals_property_history
+  include_mode: true
+  hash_column:
+  - object_id
